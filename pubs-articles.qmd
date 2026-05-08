@@ -1,0 +1,38 @@
+---
+title: "Journal Articles"
+bibliography: pubs.bib
+csl: apa.csl
+link-citations: true
+link-bibliography: true
+nocite: |
+  @bundrickPlaceValuesPublic2020,
+  @cannonIdentifyingBarriersPreventing2024,
+  @connerCulturalTheoryManagerial2016,
+  @goebbertWeatherClimateWorldviews2012,
+  @guptaTrackingNuclearMood2019,
+  @hawesClimateSciencePolitics2022,
+  @jenkins-smithReversingNuclearOpposition2011,
+  @nowlinAdvocacyCoalitionsPolitical2022,
+  @nowlinCulturalTheoryPartisanship2020,
+  @nowlinDecidingWhoDecides2026,
+  @nowlinHotRocksThat2019,
+  @nowlinImplementationOklahomaMarriage2008,
+  @nowlinModelingIssueDefinitions2016,
+  @nowlinPolicyBeliefsBelief2024,
+  @nowlinPolicyChangePolicy2016,
+  @nowlinPolicyLearningInformation2021,
+  @nowlinPoliticalBeliefsViews2021,
+  @nowlinRevenueUsePublic2020,
+  @nowlinSocialCapitalHurricane2021,
+  @nowlinTheoriesPolicyProcess2011,
+  @nowlinWhoShouldMore2022,
+  @reedyTechnicalIssuesEngagement2023,
+  @ripbergerReconsideringRelationshipCultural2012,
+  @rountreeInternalDynamicsScaling2022a,
+  @vantaggiatoSeaLevelRiseAdaptation2026,
+  @wehdeDeterminingPatternsRoutine2023,
+  @wehdePublicAttributionResponsibility2021
+---
+
+::: {#refs}
+:::

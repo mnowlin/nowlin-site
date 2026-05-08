@@ -1,0 +1,9 @@
+---
+title: "Publications"
+---
+
+- [Books](pubs-books.qmd)
+- [Journal Articles](pubs-articles.qmd)
+- [Book Chapters](pubs-chapters.qmd)
+- [Conference Proceedings](pubs-proceedings.qmd)
+- [Book Reviews](pubs-book-reviews.qmd)

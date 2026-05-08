@@ -1,0 +1,7 @@
+/.quarto/
+/docs/
+.DS_Store
+*.log
+.Rproj.user/
+.Rhistory
+.env

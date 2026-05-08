@@ -1,0 +1,13 @@
+---
+title: "Books"
+bibliography: pubs.bib
+csl: apa.csl
+link-citations: true
+link-bibliography: true
+nocite: |
+  @nowlinEnvironmentalPolicymakingEra2019
+  @jenkins-smithQuantitativeResearchMethods2017
+---
+
+::: {#refs}
+:::

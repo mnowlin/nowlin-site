@@ -1,0 +1,39 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Matthew C. Nowlin"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: publications.qmd
+        text: Publications
+      - href: teaching.qmd
+        text: Teaching
+    right:
+      - icon: envelope
+        href: mailto:matthew.nowlin@uta.edu
+      - href: files/nowlin-cv-short.pdf
+        text: CV
+      - text: "{{< ai google-scholar >}}" 
+        href: https://scholar.google.com/citations?user=xu7Y7_QAAAAJ&hl=en
+      - text: "{{< ai orcid >}}"
+        href: https://orcid.org/0000-0002-0513-3756
+      - text: "{{< ai osf >}}" 
+        href: https://osf.io/j7nbz/
+
+  page-footer:
+    left: |
+        © Matthew C. Nowlin 2026
+    right:  |
+      <span style="float:right">Made using {{< fa brands r-project >}} and [Quarto](https://quarto.org/)</span> <br>
+      <span style="float:right">View the source code [{{< fa brands github >}} GitHub](https://github.com/mnowlin/nowlin-website)</span>
+
+format:
+  html:
+    theme: flatly
+
+
+
