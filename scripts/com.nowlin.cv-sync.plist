@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- launchd agent that runs sync-cv.sh whenever the source C.V. changes.
+     Install: cp scripts/com.nowlin.cv-sync.plist ~/Library/LaunchAgents/ && launchctl load ~/Library/LaunchAgents/com.nowlin.cv-sync.plist -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.nowlin.cv-sync</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/matthewnowlin/Library/CloudStorage/OneDrive-UTArlington/04-RESOURCES/nowlin-site/scripts/sync-cv.sh</string>
+  </array>
+  <key>WatchPaths</key>
+  <array>
+    <string>/Users/matthewnowlin/Library/CloudStorage/OneDrive-UTArlington/04-RESOURCES/nowlin-cv/nowlin-cv-short.pdf</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>ThrottleInterval</key>
+  <integer>30</integer>
+  <key>StandardOutPath</key>
+  <string>/Users/matthewnowlin/Library/Logs/nowlin-cv-sync.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/matthewnowlin/Library/Logs/nowlin-cv-sync.log</string>
+</dict>
+</plist>
