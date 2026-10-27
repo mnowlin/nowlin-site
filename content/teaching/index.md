@@ -7,14 +7,14 @@ title: "Teaching"
 ### Undergraduate
 
 <ul class="course-list">
-<li><strong>POLS 2311</strong> Government of the United States — <a href="{{< staticrel "files/POLS2311syllabus.pdf" >}}">Syllabus (PDF)</a></li>
-<li><strong>POLS 4392</strong> Energy and Environmental Policy — <a href="{{< staticrel "files/POLS4392Syllabus.pdf" >}}">Syllabus (PDF)</a></li>
+<li><strong><a href="https://mnowlin.github.io/american-government/">Government of the United States</a></strong> — <a href="{{< staticrel "files/POLS2311syllabus.pdf" >}}">Syllabus (PDF)</a></li>
+<li><strong>Energy and Environmental Policy</strong> — <a href="{{< staticrel "files/POLS4392Syllabus.pdf" >}}">Syllabus (PDF)</a></li>
 </ul>
 
 ### Graduate
 
 <ul class="course-list">
-<li><strong>POLS 5312</strong> Making Public Policy — <a href="{{< staticrel "files/POLS5312syllabus.pdf" >}}">Syllabus (PDF)</a></li>
+<li><strong>Making Public Policy</strong> — <a href="{{< staticrel "files/POLS5312syllabus.pdf" >}}">Syllabus (PDF)</a></li>
 </ul>
 
 ## Teaching Resources

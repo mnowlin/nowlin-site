@@ -65,7 +65,7 @@ It appears under the **Presentations** tab on the Writings page.
 ## Update your bio, C.V., teaching, or contact details
 
 - **Bio & C.V. page:** `content/bio/index.md`
-- **C.V. PDF:** automatic. Save the new PDF as `nowlin-cv/nowlin-cv-short.pdf` (next to this repo in `04-RESOURCES`); the launchd agent `~/Library/LaunchAgents/com.nowlin.cv-sync.plist` runs `scripts/sync-cv.sh`, which copies it to `static/files/`, commits, and pushes. Log: `~/Library/Logs/nowlin-cv-sync.log`. To do it by hand, run `bash scripts/sync-cv.sh` or replace `static/files/nowlin-cv-short.pdf` yourself (same filename keeps every link working).
+- **C.V. PDF:** after saving a new `nowlin-cv/nowlin-cv-short.pdf` (next to this repo in `04-RESOURCES`), run `bash scripts/sync-cv.sh` from the repo. It copies the PDF to `static/files/`, commits, and pushes (same filename keeps every link working). `scripts/com.nowlin.cv-sync.plist` can run this automatically via launchd, but only if `/bin/bash` has Full Disk Access, since background jobs can't read OneDrive otherwise.
 - **Teaching:** `content/teaching/index.md`; upload syllabi to `static/files/`.
 - **Contact page:** `content/contact/index.md`
 - **Name, title, institution, email, profile links (header, footer, homepage):** the `owner:` block at the top of `hugo.yaml`.
