@@ -93,10 +93,7 @@ In `hugo.yaml` under `mysite:`:
 
 ## Going live (one time)
 
-Your domain currently points at **Netlify**. Choose one:
-
-- **Keep Netlify (simplest):** replace the contents of your existing `nowlin-site` repository with these files and push. The included `netlify.toml` tells Netlify how to build the new site. Nothing changes with your domain.
-- **Switch to GitHub Pages:** push to GitHub, then in the repository go to **Settings → Pages → Source: GitHub Actions** and set the custom domain to `matthewcnowlin.com`. Then update your domain's DNS records to point at GitHub Pages (GitHub's Pages settings show the exact records). Turn off the Netlify site afterward.
+The site is hosted on **Netlify**. Every push to `main` on GitHub triggers a Netlify build, configured by `netlify.toml`.
 
 ## Previewing on your own computer (optional)
 

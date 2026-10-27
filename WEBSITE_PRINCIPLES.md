@@ -7,7 +7,7 @@ Architecture playbook for anyone (human or AI) maintaining this site. Built from
 - **Hugo extended 0.148.2+** (Hugo Blox 0.10 refuses older versions) with **Hugo Blox `blox-tailwind` v0.10.0** as a Go module, vendored in `_vendor/` (committed) so builds are hermetic and theme templates can be copied for overrides.
 - **Tailwind v4** via Hugo's native `css.TailwindCSS`; needs `@tailwindcss/cli` and `@tailwindcss/typography` from `package.json`. All project styling lives in `assets/css/custom.css`, loaded after Tailwind; layouts use project-specific semantic classes rather than Tailwind utilities.
 - **Pagefind** builds the search index after Hugo (`npx pagefind --site public`). `<main>` carries `data-pagefind-body`, so the navbar/footer aren't indexed.
-- **Deployment:** `.github/workflows/deploy.yml` (GitHub Pages) or `netlify.toml` (Netlify, the current host). Both run `npm ci → hugo --gc --minify → pagefind`.
+- **Deployment:** Netlify, via `netlify.toml`: `npm ci → hugo --gc --minify → pagefind`.
 - `baseURL` is the final `https://matthewcnowlin.com/` in `hugo.yaml` and is **not** overridden in CI (configure-pages can emit `http://`, poisoning canonicals and the sitemap).
 
 ## Overrides

@@ -1,5 +1,4 @@
-# Alternative to GitHub Pages: your domain currently points at Netlify. If you keep Netlify,
-# this builds the same site there. Use one host or the other, not both.
+# Netlify builds and hosts the site on every push to main.
 [build]
   publish = "public"
   command = "npm ci && hugo --gc --minify && npx pagefind --site public"
