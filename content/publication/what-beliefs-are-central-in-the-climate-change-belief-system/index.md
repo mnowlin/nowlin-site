@@ -9,6 +9,8 @@ doi: "10.1111/ssqu.70202"
 links:
   - name: "Publisher's Version"
     url: "https://doi.org/10.1111/ssqu.70202"
+  - name: "Code (GitHub)"
+    url: "https://github.com/mnowlin/climate-change-beliefs"
 tags: ["cultural-theory", "climate-energy"]
 featured: false
 zotero_key: "nowlinWhatBeliefsAre2026"

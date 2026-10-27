@@ -9,5 +9,7 @@ doi: "10.1111/polp.12458"
 links:
   - name: "Publisher's Version"
     url: "https://doi.org/10.1111/polp.12458"
+  - name: "Code (GitHub)"
+    url: "https://github.com/mnowlin/ACFandPA"
 tags: ["policy-process"]
 ---

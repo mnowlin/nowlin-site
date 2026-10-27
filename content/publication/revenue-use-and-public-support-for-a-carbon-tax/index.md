@@ -9,6 +9,8 @@ doi: "10.1088/1748-9326/ab92c3"
 links:
   - name: "Publisher's Version"
     url: "https://doi.org/10.1088/1748-9326/ab92c3"
+  - name: "Code (GitHub)"
+    url: "https://github.com/mnowlin/carbon-tax-support"
 tags: ["climate-energy"]
 featured: true
 ---

@@ -8,6 +8,8 @@ student_authors: ["M. Lee Bundrick Jr."]
 links:
   - name: "Publisher's Version"
     url: "https://digitalcommons.coastal.edu/jops/vol48/iss1/4"
+  - name: "Code (GitHub)"
+    url: "https://github.com/mnowlin/sc-climate-change-views"
 tags: ["climate-energy", "cultural-theory"]
 ---
 <!-- NOTE FOR MATT: The C.V. lists this as volume 40; the BibTeX and the journal URL (vol48/iss1) say volume 48. Shown as 48 — please confirm. -->

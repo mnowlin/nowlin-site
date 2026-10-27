@@ -9,5 +9,7 @@ doi: "10.1177/0963662520978567"
 links:
   - name: "Publisher's Version"
     url: "https://doi.org/10.1177/0963662520978567"
+  - name: "Code (GitHub)"
+    url: "https://github.com/mnowlin/public-opinion-experts"
 tags: ["climate-energy", "deliberation"]
 ---

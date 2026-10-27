@@ -9,6 +9,8 @@ doi: "10.3390/su18178883"
 links:
   - name: "Publisher's Version"
     url: "https://doi.org/10.3390/su18178883"
+  - name: "Code (GitHub)"
+    url: "https://github.com/mnowlin/cc-behave"
 tags: ["cultural-theory", "climate-energy"]
 featured: false
 zotero_key: "nowlinBehavingSustainablyCultural2026"

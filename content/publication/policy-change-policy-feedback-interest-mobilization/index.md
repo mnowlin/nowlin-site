@@ -9,5 +9,7 @@ doi: "10.1111/ropr.12158"
 links:
   - name: "Publisher's Version"
     url: "https://doi.org/10.1111/ropr.12158"
+  - name: "Code (GitHub)"
+    url: "https://github.com/mnowlin/PolicyChange"
 tags: ["policy-process", "nuclear"]
 ---

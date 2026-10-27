@@ -9,6 +9,8 @@ doi: "10.1111/psj.12397"
 links:
   - name: "Publisher's Version"
     url: "https://doi.org/10.1111/psj.12397"
+  - name: "Code (GitHub)"
+    url: "https://github.com/mnowlin/PolicyLearning"
 tags: ["policy-process"]
 featured: true
 ---
