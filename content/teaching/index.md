@@ -1,6 +1,5 @@
 ---
 title: "Teaching"
-aliases: ["/teaching.html"]
 ---
 
 ## Courses Taught at UTA
