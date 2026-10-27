@@ -8,4 +8,7 @@ location: "Charleston, SC"
 publication: "Science Cafe, Charleston County Public Library, Hurd/St. Andrews Branch, Charleston, SC"
 talk_type: Invited talk
 tags: ["climate-energy"]
+links:
+  - name: "Slides (PDF)"
+    url: "files/climate-change-science-policy-and-politics-slides.pdf"
 ---

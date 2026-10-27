@@ -9,7 +9,7 @@ must be open), then for each item:
   - not on the site: a new content/publication/<slug>/index.md is written, and the slug is added
     to the guessed research areas in data/research_areas.json.
 PDFs dropped in pdf-inbox/ named <citation-key>.pdf or <slug>.pdf are moved to static/files/ and
-linked from their page.
+linked from their page: "Article (PDF)" for a publication, "Slides (PDF)" for a talk in content/talk/.
 
 Usually run through scripts/add-pubs.sh, which reviews, commits, and pushes.
   python3 scripts/add_pubs.py [--dry-run] [--file export.json] [--changed-list out.txt]
@@ -18,6 +18,7 @@ import argparse, glob, json, os, re, shutil, sys, unicodedata, urllib.parse, url
 
 SITE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUBDIR = os.path.join(SITE, "content", "publication")
+TALKDIR = os.path.join(SITE, "content", "talk")
 AREAS_JSON = os.path.join(SITE, "data", "research_areas.json")
 INBOX = os.path.join(SITE, "pdf-inbox")
 COLLECTION = "Publications"
@@ -346,20 +347,24 @@ def main():
     if added:
         changed.append(os.path.relpath(AREAS_JSON, SITE))
 
-    # PDFs waiting in the inbox
+    # PDFs waiting in the inbox: articles for publications, slides for talks
     attached = []
     for pdf in sorted(glob.glob(os.path.join(INBOX, "*.pdf"))):
         stem = os.path.splitext(os.path.basename(pdf))[0]
         slug = slug_for_key.get(stem) or (stem if os.path.isdir(os.path.join(PUBDIR, stem)) else None)
-        if not slug:
-            notes.append(f"PDF not matched to a publication (name it <citation-key>.pdf or <slug>.pdf): {os.path.basename(pdf)}")
+        if slug:
+            page, fname, label = os.path.join(PUBDIR, slug, "index.md"), f"{slug}.pdf", "Article (PDF)"
+        elif os.path.isdir(os.path.join(TALKDIR, stem)):
+            slug = stem
+            page, fname, label = os.path.join(TALKDIR, slug, "index.md"), f"{slug}-slides.pdf", "Slides (PDF)"
+        else:
+            notes.append(f"PDF not matched to a publication or talk (name it <citation-key>.pdf or <slug>.pdf): {os.path.basename(pdf)}")
             continue
-        dest = os.path.join(SITE, "static", "files", f"{slug}.pdf")
-        page = os.path.join(PUBDIR, slug, "index.md")
-        attached.append((os.path.basename(pdf), slug))
+        dest = os.path.join(SITE, "static", "files", fname)
+        attached.append((os.path.basename(pdf), fname, slug))
         if not args.dry_run:
             shutil.move(pdf, dest)
-            add_link(page, "Article (PDF)", f"files/{slug}.pdf")
+            add_link(page, label, f"files/{fname}")
         changed += [os.path.relpath(dest, SITE), os.path.relpath(page, SITE)]
 
     # Report
@@ -372,8 +377,8 @@ def main():
             + f"\n     research areas (guessed, please check): {', '.join(f['areas']) or 'none'}\n")
     for slug, old, f in updated:
         say(f"PUBLISHED (was forthcoming)  {slug}/\n     was: {old}\n     now: {f['title']}\n     {f['publication']}\n")
-    for name, slug in attached:
-        say(f"PDF  {name} -> static/files/{slug}.pdf, linked from {slug}/")
+    for name, fname, slug in attached:
+        say(f"PDF  {name} -> static/files/{fname}, linked from {slug}/")
     for n in notes:
         say("NOTE " + n)
     if not (added or updated or attached):

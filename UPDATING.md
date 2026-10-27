@@ -72,7 +72,9 @@ tags: ["climate-energy"]
 ---
 ```
 
-It appears under the **Presentations** tab on the Writings page.
+It appears under the **Presentations** tab on the Writings page. To place it under a research area on the homepage, also add its folder name to that area's `items` list in `data/research_areas.json`.
+
+**Slides:** export the deck as a PDF, save it in `pdf-inbox/` as `<talk-folder-name>.pdf` (for example `beliefs-about-climate-change.pdf`), and run `bash scripts/add-pubs.sh`. The PDF is moved to `static/files/<talk-folder-name>-slides.pdf`, and a **Slides (PDF)** button is added to the talk's page.
 
 ## Update your bio, C.V., teaching, or contact details
 

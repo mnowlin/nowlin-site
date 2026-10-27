@@ -8,4 +8,7 @@ location: "Charleston, SC"
 publication: "Panel discussion, “Environmental Policy and the Impact of Elections,” College of Charleston, Charleston, SC"
 talk_type: Invited talk
 tags: ["climate-energy"]
+links:
+  - name: "Slides (PDF)"
+    url: "files/environmental-policy-politics-and-polarization-slides.pdf"
 ---
