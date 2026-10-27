@@ -4,5 +4,18 @@
   "Kuhika Gupta":          { "url": "https://www.ou.edu/ippra/people/leadership-team.html", "type": "university" },
   "Justin Reedy":          { "url": "https://ou.edu/cas/comm/about/people/faculty/justin-reedy", "type": "university" },
   "Wesley Wehde":          { "url": "https://www.depts.ttu.edu/politicalscience/Faculty/WehdeWesley.php", "type": "university" },
-  "Mark Lubell":           { "url": "https://desp.ucdavis.edu/people/mark-lubell", "type": "university" }
+  "Mark Lubell":           { "url": "https://desp.ucdavis.edu/people/mark-lubell", "type": "university" },
+  "Aaron C. Sparks":       { "url": "https://www.sog.unc.edu/about/faculty-and-staff/aaron-c-sparks", "type": "university" },
+  "Emily Mee":             { "url": "https://www.wichita.edu/profiles/academics/fairmount_college_of_liberal_arts_and_sciences/Hugo_Wall/Faculty/Mee-Emily.php", "type": "university" },
+  "Carol L. Silva":           { "url": "https://www.ou.edu/cas/psc/faculty/carol-silva", "type": "university" },
+  "Francesca Vantaggiato":    { "url": "https://www.kcl.ac.uk/people/francesca-pia-vantaggiato", "type": "university" },
+  "Geoboo Song":              { "url": "https://gbsong.uark.edu/", "type": "personal" },
+  "John Rountree":            { "url": "https://www.uhd.edu/faculty/john-rountree.aspx", "type": "university" },
+  "Juita-Elena (Wie) Yusuf":  { "url": "https://www.odu.edu/directory/wie-yusuf", "type": "university" },
+  "Kendra Stewart":           { "url": "https://charleston.edu/political-science/faculty/stewart-kendra.php", "type": "university" },
+  "Majid Shafiee-Jood":       { "url": "https://engineering.virginia.edu/faculty/majid-shafiee-jood", "type": "university" },
+  "Maren Trochmann":          { "url": "https://scholars.org/scholar/maren-trochmann", "type": "profile" },
+  "Thomas M. Rabovsky":       { "url": "https://oneill.indiana.edu/faculty-research/directory/profiles/faculty/full-time/rabovsky-thomas.html", "type": "university" },
+  "Timothy Callahan":         { "url": "https://charleston.edu/geology/faculty/callahan-tim.php", "type": "university" },
+  "Thaddieus W. Conner":      { "url": "https://deptofgov.nmsu.edu/facultydirectory/thaddieus-conner.html", "type": "university" }
 }

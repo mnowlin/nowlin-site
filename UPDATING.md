@@ -10,6 +10,16 @@ Everything on the site is plain text. You can edit files directly on GitHub (cli
 
 ## Add a new publication
 
+### From Zotero (the usual way)
+
+1. Add the paper to your **Publications** collection in Zotero, with the abstract and DOI filled in. For a forthcoming paper, leave the volume empty or put `forthcoming` in Extra.
+2. Optional: to offer a PDF, save it in `pdf-inbox/` (in this repo) as `<citation-key>.pdf`, the Better BibTeX key shown in Zotero.
+3. With Zotero open, run `bash scripts/add-pubs.sh` from this folder.
+
+The script adds a page for every item in the collection that isn't on the site yet. It skips papers that are already there, matching on DOI or title. When a paper marked forthcoming has come out (Zotero now has its volume or pages), the script updates that page in place and its web address stays the same. It prints what it did, guesses each new paper's research areas, and names any new co-authors. It publishes only when you answer `y`. If you answer no, the files stay in place, so you can fix the research areas (the `tags:` line and `data/research_areas.json`) or set `featured: true`, then commit and push.
+
+### By hand
+
 1. On GitHub, open `content/publication/` and choose **Add file → Create new file**.
 2. Name it `a-short-slug/index.md` (lowercase words joined by hyphens). **The folder name becomes the permanent web address** — `matthewcnowlin.com/publication/a-short-slug/` — so never rename it later.
 3. Paste and fill in:
@@ -33,9 +43,11 @@ featured: false            # true = shown first on the homepage under its resear
 
 For a forthcoming paper add `status: forthcoming` and put “Forthcoming” at the end of `publication:`.
 
-That's all. The paper appears on the Writings page, on its research areas on the homepage, in search, and in "See Also" on related pages — automatically.
+4. Add the folder name to the `items` list of each of its research areas in `data/research_areas.json`. `tags:` controls the Writings-page filter, while the homepage research areas read `items`.
 
-**Research-area ids:** `policy-process`, `cultural-theory`, `climate-energy`, `nuclear`, `hazards`, `deliberation`, `governance`, `methods`. To also place a paper inside a sub-group of Theories of the Policy Process, add its folder name to the right `items` list in `data/research_areas.json`.
+The paper then appears on the Writings page, on its research areas on the homepage, in search, and in "See Also" on related pages.
+
+**Research-area ids:** `policy-process`, `cultural-theory`, `climate-energy`, `nuclear`, `hazards`, `deliberation`, `governance`, `methods`. To also place a paper inside a sub-group of Theories of the Policy Process, add its folder name to the right subcategory `items` list in `data/research_areas.json`.
 
 **Optional extras:**
 - **Cover image:** upload `featured.jpg` into the paper's folder. If it is a publisher's image, add `image_credit: "Cover image from Publisher Name"`.
