@@ -1,0 +1,16 @@
+{{- $r := partial "related_finder.html" . -}}
+{{- if or $r.internal $r.external }}
+<section class="gk-see-also" aria-labelledby="see-also-h">
+  <h2 id="see-also-h">{{ i18n "label_see_also" }}</h2>
+  <ul>
+    {{- range $r.internal }}
+    <li><span class="kind kind--{{ .kind }}">[{{ i18n (printf "kind_%s" .kind) | default (title .kind) }}]</span>
+      <a href="{{ .page.RelPermalink }}">{{ .page.Title | markdownify }}</a> <span class="muted">({{ .page.Date.Format "2006" }})</span></li>
+    {{- end }}
+    {{- range $r.external }}
+    <li><span class="kind kind--{{ .kind }}">[{{ i18n (printf "kind_%s" .kind) | default (title .kind) }}]</span>
+      <a href="{{ .url }}">{{ .title }}</a></li>
+    {{- end }}
+  </ul>
+</section>
+{{- end }}

@@ -1,0 +1,15 @@
+{{- /* One dense citation: Authors. Year. “Title.” Venue. (+ abstract toggle and links) */ -}}
+{{- $p := .page -}}{{- $headingless := .compact | default false -}}
+<div class="cite">
+  <span class="cite-authors">{{ partial "author_list.html" (dict "page" $p) }}</span>. <span class="cite-year">{{ partial "year_label.html" $p }}</span>.
+  “<a class="cite-title" href="{{ $p.RelPermalink }}">{{ $p.Title | markdownify }}</a>.”
+  {{- with $p.Params.publication }} <em class="cite-venue">{{ . | markdownify }}</em>.{{ end }}
+</div>
+{{- if or $p.Params.abstract $p.Params.links }}
+<div class="cite-actions">
+  {{- with $p.Params.abstract }}
+  <details class="abstract-toggle"><summary>{{ i18n "btn_abstract" }}</summary><div class="abstract-text">{{ . | markdownify }}</div></details>
+  {{- end }}
+  {{ partial "page_links_row.html" $p }}
+</div>
+{{- end }}

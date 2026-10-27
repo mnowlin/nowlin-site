@@ -1,0 +1,96 @@
+{{/* Site-wide search modal. Pagefind (built in CI) is loaded only when the modal first opens.
+     The import path uses relURL WITHOUT a leading slash so it works under any baseURL subpath. */}}
+<div id="search-modal" class="search-modal" hidden>
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel" role="dialog" aria-modal="true" aria-labelledby="search-label">
+    <div class="search-head">
+      <label id="search-label" for="search-input" class="sr-only">{{ i18n "label_search" }}</label>
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input id="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="{{ i18n "label_search_placeholder" }}" role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list">
+      <button type="button" class="search-esc" data-search-close aria-label="Close search"><kbd>Esc</kbd></button>
+    </div>
+    <ul id="search-results" class="search-results" role="listbox" aria-label="Search results"></ul>
+    <p class="search-status" aria-live="polite"></p>
+    <p class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> navigate · <kbd>↵</kbd> open</span>
+      <a id="search-google" href="https://www.google.com/search?q=site%3A{{ site.BaseURL | replaceRE "^https?://" "" | replaceRE "/$" "" | urlquery }}">Search this site with Google</a></p>
+  </div>
+</div>
+<script>
+(function () {
+  var modal = document.getElementById('search-modal');
+  if (!modal) return;
+  var input = document.getElementById('search-input'),
+      list = document.getElementById('search-results'),
+      status = modal.querySelector('.search-status'),
+      google = document.getElementById('search-google'),
+      googleBase = google.getAttribute('href'),
+      pagefind = null, loading = null, timer = null, active = -1, lastFocus = null;
+
+  function load() {
+    if (!loading) {
+      loading = import('{{ "pagefind/pagefind.js" | relURL }}')
+        .then(function (m) { pagefind = m; return m; })
+        .catch(function () { pagefind = null; return null; });
+    }
+    return loading;
+  }
+  function open() {
+    lastFocus = document.activeElement;
+    modal.hidden = false;
+    document.documentElement.classList.add('search-open');
+    input.focus(); input.select();
+    load();
+  }
+  function close() {
+    modal.hidden = true;
+    document.documentElement.classList.remove('search-open');
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  function setActive(i) {
+    var items = list.querySelectorAll('a');
+    if (!items.length) { active = -1; return; }
+    active = (i + items.length) % items.length;
+    items.forEach(function (a, j) { a.setAttribute('aria-selected', j === active ? 'true' : 'false'); a.parentNode.classList.toggle('is-active', j === active); });
+    items[active].scrollIntoView({ block: 'nearest' });
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  function run(q) {
+    google.setAttribute('href', googleBase + (q ? '+' + encodeURIComponent(q) : ''));
+    if (!q) { list.innerHTML = ''; status.textContent = ''; input.setAttribute('aria-expanded', 'false'); return; }
+    status.textContent = 'Searching…';
+    load().then(function (pf) {
+      if (!pf) { list.innerHTML = ''; status.textContent = 'Search index unavailable — use the Google link below.'; return; }
+      pf.search(q).then(function (r) {
+        return Promise.all(r.results.slice(0, 10).map(function (x) { return x.data(); }));
+      }).then(function (rows) {
+        if (input.value.trim() !== q) return;
+        list.innerHTML = rows.map(function (d, i) {
+          return '<li role="presentation"><a role="option" id="sr-' + i + '" href="' + esc(d.url) + '"><span class="sr-title">' + esc(d.meta.title || d.url) + '</span><span class="sr-excerpt">' + d.excerpt + '</span></a></li>';
+        }).join('');
+        status.textContent = rows.length ? '' : '{{ i18n "label_no_results" }}';
+        input.setAttribute('aria-expanded', rows.length ? 'true' : 'false');
+        active = -1; if (rows.length) setActive(0);
+      });
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-search-open]')) { e.preventDefault(); open(); }
+    else if (e.target.closest('[data-search-close]')) { e.preventDefault(); close(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    var k = e.key;
+    if ((e.metaKey || e.ctrlKey) && (k === 'k' || k === 'K')) { e.preventDefault(); modal.hidden ? open() : close(); return; }
+    if (k === '/' && modal.hidden && !/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement || {}).tagName || '')) { e.preventDefault(); open(); return; }
+    if (modal.hidden) return;
+    if (k === 'Escape') { e.preventDefault(); close(); }
+    else if (k === 'ArrowDown') { e.preventDefault(); setActive(active + 1); }
+    else if (k === 'ArrowUp') { e.preventDefault(); setActive(active - 1); }
+    else if (k === 'Enter' && active >= 0 && document.activeElement === input) {
+      var a = list.querySelectorAll('a')[active]; if (a) { e.preventDefault(); window.location.href = a.href; }
+    }
+  });
+  input.addEventListener('input', function () { clearTimeout(timer); var q = input.value.trim(); timer = setTimeout(function () { run(q); }, 160); });
+})();
+</script>

@@ -1,0 +1,14 @@
+{{- /* Which Writings tab a page belongs to: legacy map first, then publication_types. */ -}}
+{{- $slug := partial "functions/slug.html" . -}}
+{{- $tab := "" -}}
+{{- with index site.Data.writings_legacy_map.entries $slug }}{{ $tab = .tab }}{{ end -}}
+{{- if not $tab -}}
+  {{- $t := .Params.publication_types | default slice -}}
+  {{- if or (eq .Section "talk") (in $t "presentation") }}{{ $tab = "presentations" }}
+  {{- else if in $t "book" }}{{ $tab = "book" }}
+  {{- else if or (in $t "chapter") (in $t "book_chapter") }}{{ $tab = "chapters" }}
+  {{- else if in $t "conference_paper" }}{{ $tab = "proceedings" }}
+  {{- else if in $t "book_review" }}{{ $tab = "reviews" }}
+  {{- else }}{{ $tab = "articles" }}{{ end -}}
+{{- end -}}
+{{- return $tab -}}

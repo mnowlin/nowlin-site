@@ -1,0 +1,11 @@
+{{- /* See Also / list label. publication_types take precedence over section. */ -}}
+{{- $t := .Params.publication_types | default slice -}}
+{{- $k := "paper" -}}
+{{- if in $t "book" }}{{ $k = "book" }}
+{{- else if in $t "data" }}{{ $k = "dataset" }}
+{{- else if in $t "software" }}{{ $k = "software" }}
+{{- else if in $t "patent" }}{{ $k = "patent" }}
+{{- else if in $t "court_brief" }}{{ $k = "court_brief" }}
+{{- else if or (in $t "presentation") (eq .Section "talk") }}{{ $k = "presentation" }}
+{{- else if eq .Section "software" }}{{ $k = "software" }}{{ end -}}
+{{- return $k -}}

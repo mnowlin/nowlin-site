@@ -1,0 +1,11 @@
+{{- /* Authors as "A, B, and C", the site owner in bold. Pass dict "page" and optional "link" true. */ -}}
+{{- $p := .page -}}{{- $link := .link | default false -}}
+{{- $owner := site.Params.owner.name -}}
+{{- $as := $p.Params.authors | default slice -}}
+{{- $n := len $as -}}
+{{- range $i, $a := $as -}}
+  {{- if gt $i 0 }}{{ if eq $i (sub $n 1) }}{{ if gt $n 2 }},{{ end }} and {{ else }}, {{ end }}{{ end -}}
+  {{- if eq $a $owner -}}<strong class="owner">{{ $a }}</strong>
+  {{- else if and $link (index site.Data.coauthors $a) -}}<a href="{{ (index site.Data.coauthors $a).url }}">{{ $a }}</a>
+  {{- else -}}{{ $a }}{{- end -}}
+{{- end -}}

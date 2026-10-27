@@ -1,0 +1,49 @@
+{{- $o := site.Params.owner -}}
+<section class="hero" aria-labelledby="hero-name">
+  <div class="wrap hero__inner">
+    <img class="hero__photo" src="{{ $o.photo | relURL }}" width="200" height="200" fetchpriority="high" alt="Portrait of {{ $o.name }}, {{ $o.institution }}">
+    <div class="hero__text">
+      <h1 id="hero-name">{{ $o.name }}</h1>
+      <p class="hero__title">{{ $o.title }}<br><a href="{{ $o.institution_url }}">{{ $o.institution }}</a></p>
+      <p class="hero__intro">{{ .Params.intro | markdownify }}</p>
+      <p class="hero__actions">
+        <a class="btn btn-primary" href="{{ "bio/" | relURL }}">{{ i18n "label_full_bio" }}</a>
+        <a class="btn btn-secondary" href="{{ "publication/" | relURL }}">Writings</a>
+        <a class="btn btn-secondary" href="{{ $o.cv | relURL }}">C.V. (PDF)</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="areas wrap" aria-labelledby="research-areas">
+  <h2 id="research-areas" class="areas__heading">{{ i18n "label_research_areas" }}</h2>
+  {{- range site.Data.research_areas.areas }}
+    {{- $area := . -}}
+    {{- $pages := slice -}}
+    {{- range .items }}{{ with site.GetPage (printf "/publication/%s" .) }}{{ $pages = $pages | append . }}{{ else }}{{ with site.GetPage (printf "/talk/%s" .) }}{{ $pages = $pages | append . }}{{ end }}{{ end }}{{ end -}}
+    {{- $pubs := where $pages "Section" "publication" -}}
+    {{- $featured := sort (where $pubs "Params.featured" true) "Date" "desc" -}}
+    {{- $rest := sort ($pubs | complement $featured) "Date" "desc" -}}
+    {{- $show := first 5 ($featured | append $rest) -}}
+    <details class="area" id="{{ $area.id }}">
+      <summary>
+        <span class="area__chev" aria-hidden="true"></span>
+        <span class="area__title">{{ $area.title }}</span>
+        <span class="area__count">{{ len $pages }}</span>
+      </summary>
+      <div class="area__body">
+        <p class="area__desc">{{ $area.description }}</p>
+        <ol class="cite-list">
+          {{- range $show }}<li class="cite-item">{{ partial "citation_line.html" (dict "page" .) }}</li>{{ end }}
+        </ol>
+        <p class="area__more">
+          <a class="btn btn-secondary btn-small" href="{{ "publication/" | relURL }}#all&area={{ $area.id }}">{{ i18n "label_view_all" }} {{ len $pages }} in {{ $area.title }} →</a>
+          <a class="area__anchor" href="#{{ $area.id }}" aria-label="Link to {{ $area.title }}">#</a>
+        </p>
+      </div>
+    </details>
+  {{- end }}
+</section>
+<script>
+(function(){function openHash(){var id=decodeURIComponent(location.hash.slice(1));if(!id)return;var el=document.getElementById(id);if(el&&el.tagName==='DETAILS'){el.open=true;el.scrollIntoView();}}openHash();window.addEventListener('hashchange',openHash);})();
+</script>

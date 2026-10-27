@@ -1,0 +1,30 @@
+{{ define "main" }}
+{{- /* People: names-only list of co-authors, auto-discovered from every author list on the site.
+       Links come from data/coauthors.json (personal site > university page > LinkedIn). */ -}}
+{{- $owner := site.Params.owner.name -}}
+{{- $names := slice -}}
+{{- range where site.RegularPages "Section" "in" (slice "publication" "talk" "software") -}}
+  {{- range (.Params.authors | default slice) }}{{ if and (ne . $owner) (not (in $names .)) }}{{ $names = $names | append . }}{{ end }}{{ end -}}
+{{- end -}}
+{{- $keyed := slice -}}
+{{- range $names -}}
+  {{- $parts := split (replaceRE `,?\s+Jr\.?$` "" .) " " -}}
+  {{- $keyed = $keyed | append (dict "name" . "key" (printf "%s %s" (lower (index $parts (sub (len $parts) 1))) (lower .))) -}}
+{{- end -}}
+<div class="wrap content-narrow">
+  {{ partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{ with .Params.subtitle }}<p class="page-subtitle">{{ . }}</p>{{ end }}
+  {{ .Content }}
+  <ul class="people-list">
+    {{- range sort $keyed "key" }}
+      {{- $n := .name }}
+      {{- with index site.Data.coauthors $n }}
+      <li><a href="{{ .url }}">{{ $n }}</a></li>
+      {{- else }}
+      <li>{{ $n }}<!-- no verified external page found; add one in data/coauthors.json --></li>
+      {{- end }}
+    {{- end }}
+  </ul>
+</div>
+{{ end }}

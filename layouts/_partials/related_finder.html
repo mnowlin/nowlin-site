@@ -1,0 +1,134 @@
+{{- /*
+  related_finder — computes "See Also" for a publication/talk/software page at build time.
+  Returns a slice of dicts: {page, score, kind, pin}  (internal), plus external rows
+  {url, title, kind} for see_also URLs and Dataverse links.
+
+  Priority 1   explicit related_papers / related_talks / related_software / related_datasets
+               (and legacy singular related_paper / related_dataset) — always included.
+  Priority 1b  see_also: [{url, title}] or [{section, slug}]
+  Priority 1c  dataverse_url (or a Dataverse DOI found in the abstract) -> [Dataset] row
+  Priority 2   siblings in the same research-area subcategory (data/research_areas.json)
+  Priority 3   scoring: +2 per shared title token, +1 per shared co-author (the site owner
+               is excluded because he is on every item), +2 per shared tag.
+               Threshold 4, relaxed to 2 when fewer than 3 explicit picks.
+  Special      "Response to / Reply to / Comment on / Rejoinder" papers pin their subject;
+               book editions with the same base title are cross-linked.
+  Output is capped at 8, sorted by pin, score, then year; deduplicated by normalized title.
+*/ -}}
+{{- $p := . -}}
+{{- $owner := lower site.Params.owner.name -}}
+{{- $stop := slice "a" "an" "and" "the" "of" "for" "in" "on" "to" "with" "by" "at" "as" "is" "are" "be" "or" "from" "into" "using" "via" "new" "not" "no" "it" "its" "we" "our" "their" "you" "your" "this" "that" "these" "those" "but" "if" "than" "then" "so" "can" "will" "would" "could" "should" "may" "might" "also" "more" "most" "some" "all" "any" "each" "every" "who" "whom" "which" "what" "when" "where" "why" "how" "about" "between" "among" "through" "over" "under" "after" "before" "upon" "across" "per" "vs" "de" "la" "les" "et" "du" -}}
+
+{{- $pool := where (where site.RegularPages "Section" "in" (slice "publication" "talk" "software")) "Permalink" "ne" $p.Permalink -}}
+{{- $bySlug := dict -}}
+{{- range $pool }}{{ $bySlug = merge $bySlug (dict (partial "functions/slug.html" .) .) }}{{ end -}}
+{{- $mySlug := partial "functions/slug.html" $p -}}
+
+{{- /* tokenizers */ -}}
+{{- $myTitleTokens := slice -}}
+{{- range split (replaceRE `[^a-z0-9]+` " " (lower ($p.Title | plainify))) " " -}}
+  {{- if and (ge (len .) 3) (not (in $stop .)) (not (in $myTitleTokens .)) }}{{ $myTitleTokens = $myTitleTokens | append . }}{{ end -}}
+{{- end -}}
+{{- $myAuthors := slice -}}{{- $myLast := slice -}}
+{{- range ($p.Params.authors | default slice) -}}
+  {{- $a := lower . -}}
+  {{- if ne $a $owner -}}
+    {{- $myAuthors = $myAuthors | append $a -}}
+    {{- $parts := split (replaceRE `,?\s+jr\.?$` "" $a) " " -}}
+    {{- $myLast = $myLast | append (index $parts (sub (len $parts) 1)) -}}
+  {{- end -}}
+{{- end -}}
+{{- $myTags := $p.Params.tags | default slice -}}
+
+{{- $s := newScratch -}}
+{{- $s.Set "rows" slice -}}
+{{- $s.Set "used" (slice $mySlug) -}}
+{{- $s.Set "titles" (slice (replaceRE `[^a-z0-9]` "" (lower ($p.Title | plainify)))) -}}
+
+{{- /* ---- Priority 1: explicit overrides */ -}}
+{{- $explicit := slice -}}
+{{- range (slice "related_papers" "related_talks" "related_software" "related_datasets") -}}
+  {{- with index $p.Params . }}{{ $explicit = $explicit | append . }}{{ end -}}
+{{- end -}}
+{{- with $p.Params.related_paper }}{{ $explicit = $explicit | append . }}{{ end -}}
+{{- with $p.Params.related_dataset }}{{ $explicit = $explicit | append . }}{{ end -}}
+{{- range $explicit -}}
+  {{- with index $bySlug . -}}
+    {{- $s.Add "rows" (slice (dict "page" . "score" 100 "pin" 1)) -}}
+    {{- $s.Add "used" (slice (partial "functions/slug.html" .)) -}}
+  {{- end -}}
+{{- end -}}
+{{- /* ---- Priority 1b: see_also internal refs */ -}}
+{{- $external := slice -}}
+{{- range ($p.Params.see_also | default slice) -}}
+  {{- if .url -}}{{- $external = $external | append (dict "url" .url "title" (.title | default .url) "kind" (.kind | default "paper")) -}}
+  {{- else if .slug -}}{{- with index $bySlug .slug }}{{ $s.Add "rows" (slice (dict "page" . "score" 99 "pin" 1)) }}{{ $s.Add "used" (slice (partial "functions/slug.html" .)) }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- /* ---- Priority 1c: Dataverse */ -}}
+{{- $dv := $p.Params.dataverse_url -}}
+{{- if not $dv -}}{{- with findRE `https?://(dx\.)?doi\.org/10\.7910/DVN/[A-Za-z0-9]+` ($p.Params.abstract | default "") 1 }}{{ $dv = index . 0 }}{{ end -}}{{- end -}}
+{{- with $dv }}{{ $external = $external | append (dict "url" . "title" ($p.Params.dataverse_name | default "Replication data on Harvard Dataverse") "kind" "dataset") }}{{ end -}}
+
+{{- $nExplicit := len ($s.Get "rows") -}}
+
+{{- /* ---- Special: response/comment papers pin their subject */ -}}
+{{- $isResponse := findRE `^(?i)(response to|reply to|comment on|rejoinder)` ($p.Title | plainify) -}}
+{{- /* ---- Special: book editions share a base title */ -}}
+{{- $baseTitle := lower (replaceRE `(?i),?\s*(new|revised|expanded|\d+(st|nd|rd|th))\s+edition$` "" ($p.Title | plainify)) -}}
+
+{{- /* ---- Priority 2: research-area subcategory siblings */ -}}
+{{- $sib := slice -}}
+{{- range site.Data.research_areas.areas -}}
+  {{- range .subcategories -}}
+    {{- if in .items $mySlug }}{{ $sib = $sib | append .items }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* ---- Priority 2 + 3: score every remaining candidate */ -}}
+{{- $threshold := cond (lt $nExplicit 3) 2 4 -}}
+{{- range $pool -}}
+  {{- $c := . -}}
+  {{- $cs := partial "functions/slug.html" $c -}}
+  {{- if not (in ($s.Get "used") $cs) -}}
+    {{- $score := 0 -}}{{- $pin := 0 -}}
+    {{- $ctoks := slice -}}
+    {{- range split (replaceRE `[^a-z0-9]+` " " (lower ($c.Title | plainify))) " " -}}
+      {{- if and (ge (len .) 3) (not (in $stop .)) (not (in $ctoks .)) }}{{ $ctoks = $ctoks | append . }}{{ end -}}
+    {{- end -}}
+    {{- $shared := intersect $myTitleTokens $ctoks -}}
+    {{- $score = add $score (mul 2 (len $shared)) -}}
+    {{- range ($c.Params.authors | default slice) -}}
+      {{- $a := lower . -}}
+      {{- if ne $a $owner -}}
+        {{- $parts := split (replaceRE `,?\s+jr\.?$` "" $a) " " -}}
+        {{- $last := index $parts (sub (len $parts) 1) -}}
+        {{- if or (in $myAuthors $a) (in $myLast $last) }}{{ $score = add $score 1 }}{{ end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $score = add $score (mul 2 (len (intersect $myTags ($c.Params.tags | default slice)))) -}}
+    {{- if in $sib $cs }}{{ $score = add $score 10 }}{{ end -}}
+    {{- if and $isResponse (ge (len $shared) 2) }}{{ $pin = 1 }}{{ $score = add $score 50 }}{{ end -}}
+    {{- if and (in ($c.Params.publication_types | default slice) "book") (in ($p.Params.publication_types | default slice) "book") -}}
+      {{- if eq $baseTitle (lower (replaceRE `(?i),?\s*(new|revised|expanded|\d+(st|nd|rd|th))\s+edition$` "" ($c.Title | plainify))) }}{{ $pin = 1 }}{{ $score = add $score 50 }}{{ end -}}
+    {{- end -}}
+    {{- if ge $score $threshold -}}
+      {{- $s.Add "rows" (slice (dict "page" $c "score" $score "pin" $pin)) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* ---- sort (pin, score, year), dedupe by normalized title, cap at 8 */ -}}
+{{- $rows := $s.Get "rows" -}}
+{{- $keyed := slice -}}
+{{- range $rows }}{{ $keyed = $keyed | append (merge . (dict "key" (printf "%05d-%04d-%s" (add (mul .pin 1000) .score) (int (.page.Date.Format "2006")) .page.Title))) }}{{ end -}}
+{{- $out := slice -}}
+{{- $titles := $s.Get "titles" -}}
+{{- range sort $keyed "key" "desc" -}}
+  {{- $nt := replaceRE `[^a-z0-9]` "" (lower (.page.Title | plainify)) -}}
+  {{- if and (not (in $titles $nt)) (lt (len $out) (sub 8 (len $external))) -}}
+    {{- $titles = $titles | append $nt -}}
+    {{- $out = $out | append (dict "page" .page "kind" (partial "functions/kind_label.html" .page)) -}}
+  {{- end -}}
+{{- end -}}
+{{- return (dict "internal" $out "external" $external) -}}

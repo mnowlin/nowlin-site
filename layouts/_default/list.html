@@ -1,0 +1,13 @@
+{{ define "main" }}
+<div class="wrap content-narrow">
+  {{ partial "breadcrumbs.html" . }}
+  <article class="page-article">
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.subtitle }}<p class="page-subtitle">{{ . }}</p>{{ end }}
+    {{- if .Params.show_photo }}
+      {{- with site.Params.owner.photo }}<img class="bio-photo" src="{{ . | relURL }}" width="160" height="160" alt="Portrait of {{ site.Params.owner.name }}, {{ site.Params.owner.institution }}">{{ end }}
+    {{- end }}
+    <div class="prose">{{ .Content }}</div>
+  </article>
+</div>
+{{ end }}

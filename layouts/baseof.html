@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="{{ site.LanguageCode | default "en-us" }}" dir="ltr" data-wc-theme-default="light" class="light">
+  {{ partial "site_head" . }}
+  <body class="page-wrapper mn-site" id="top">
+    <a class="skip-link" href="#main-content">{{ i18n "label_skip" }}</a>
+    {{ partial "components/headers/navbar.html" . }}
+    <main id="main-content" class="page-body" tabindex="-1"{{ if ne .Kind "404" }} data-pagefind-body{{ end }}>
+      {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "site_footer" . }}
+    {{ partial "components/search-modal.html" . }}
+  </body>
+</html>

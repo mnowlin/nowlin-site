@@ -1,0 +1,70 @@
+- id: btn_abstract
+  translation: "Abstract"
+- id: btn_cite
+  translation: "Cite"
+- id: btn_publisher
+  translation: "Publisher’s Version"
+- id: label_see_also
+  translation: "See Also"
+- id: label_view_all
+  translation: "View all"
+- id: label_full_bio
+  translation: "Full Bio and C.V."
+- id: label_download_cv
+  translation: "Download C.V. (PDF)"
+- id: label_forthcoming
+  translation: "Forthcoming"
+- id: label_search
+  translation: "Search"
+- id: label_search_placeholder
+  translation: "Search titles, co-authors, abstracts…"
+- id: label_no_results
+  translation: "No results found"
+- id: label_download_bibtex
+  translation: "Download citations (BibTeX)"
+- id: label_reset
+  translation: "Reset"
+- id: label_results_of
+  translation: "of"
+- id: label_results
+  translation: "results"
+- id: label_research_areas
+  translation: "Research Areas"
+- id: label_all
+  translation: "All"
+- id: tab_articles
+  translation: "Articles"
+- id: tab_book
+  translation: "Books"
+- id: tab_chapters
+  translation: "Book Chapters"
+- id: tab_proceedings
+  translation: "Proceedings"
+- id: tab_reviews
+  translation: "Book Reviews"
+- id: tab_oer
+  translation: "Educational Resources"
+- id: tab_presentations
+  translation: "Presentations"
+- id: kind_paper
+  translation: "Paper"
+- id: kind_book
+  translation: "Book"
+- id: kind_chapter
+  translation: "Chapter"
+- id: kind_presentation
+  translation: "Presentation"
+- id: kind_review
+  translation: "Review"
+- id: kind_dataset
+  translation: "Dataset"
+- id: kind_software
+  translation: "Software"
+- id: label_skip
+  translation: "Skip to main content"
+- id: label_home
+  translation: "Home"
+- id: label_student_note
+  translation: "Student collaborator"
+- id: label_excerpted
+  translation: "Note"

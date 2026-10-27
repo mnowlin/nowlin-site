@@ -1,0 +1,4 @@
+{{- /* Returns the permanent slug (bundle directory name) of a page. */ -}}
+{{- $s := "" -}}
+{{- with .File }}{{ $s = path.Base (strings.TrimSuffix "/" .Dir) }}{{ end -}}
+{{- return $s -}}

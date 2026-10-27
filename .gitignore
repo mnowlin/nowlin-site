@@ -1,7 +1,5 @@
-/.quarto/
-/docs/
+/public/
+/resources/_gen/
+/node_modules/
+.hugo_build.lock
 .DS_Store
-*.log
-.Rproj.user/
-.Rhistory
-.env

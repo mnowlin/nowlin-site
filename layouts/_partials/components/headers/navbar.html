@@ -1,0 +1,41 @@
+{{- $owner := site.Params.owner -}}
+{{- $here := .RelPermalink -}}
+<header id="site-header" class="site-header page-header">
+  <div class="inst-bar">
+    <div class="wrap inst-bar__inner">
+      <a href="{{ $owner.institution_url }}">{{ $owner.institution }}</a>
+      <a class="inst-bar__short" href="{{ $owner.institution_url }}">UTA.EDU</a>
+    </div>
+  </div>
+  <nav class="mainnav" aria-label="Main">
+    <div class="wrap mainnav__inner">
+      <a class="brand" href="{{ site.Home.RelPermalink }}" title="{{ site.Title }} — {{ i18n "label_home" }}">{{ upper (site.Params.header.navbar.logo.text | default site.Title) }}</a>
+      <button class="nav-toggle" type="button" aria-controls="nav-menu" aria-expanded="false" aria-label="Open menu">
+        <svg class="icon-open" viewBox="0 0 20 20" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M0 3h20v2H0zm0 6h20v2H0zm0 6h20v2H0z"/></svg>
+        <svg class="icon-close" viewBox="0 0 20 20" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4.2 2.8 10 8.6l5.8-5.8 1.4 1.4L11.4 10l5.8 5.8-1.4 1.4L10 11.4l-5.8 5.8-1.4-1.4L8.6 10 2.8 4.2z"/></svg>
+      </button>
+      <ul id="nav-menu" class="nav-menu">
+        {{- range site.Menus.main }}
+          {{- $url := "" -}}
+          {{- if hasPrefix .URL "/#" -}}{{- $url = printf "%s%s" site.Home.RelPermalink (strings.TrimPrefix "/" .URL) -}}
+          {{- else if hasPrefix .URL "http" -}}{{- $url = .URL -}}
+          {{- else -}}{{- $url = strings.TrimPrefix "/" .URL | relURL -}}{{- end -}}
+          {{- $active := and (not (hasPrefix .URL "/#")) (hasPrefix $here $url) (ne $url site.Home.RelPermalink) -}}
+          {{- if and (eq .URL "/publication/") (hasPrefix $here ("talk/" | relURL)) }}{{ $active = true }}{{ end -}}
+          <li><a class="nav-link{{ if $active }} active{{ end }}" href="{{ $url }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+        {{- end }}
+        <li class="nav-search-item">
+          <button type="button" class="search-trigger" data-search-open aria-label="{{ i18n "label_search" }} (Ctrl+K)" title="{{ i18n "label_search" }} (Ctrl+K)">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <span class="search-label-mobile">{{ i18n "label_search" }}</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<script>
+(function(){var b=document.querySelector('.nav-toggle'),m=document.getElementById('nav-menu');if(!b||!m)return;
+b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',o?'false':'true');b.setAttribute('aria-label',o?'Open menu':'Close menu');m.classList.toggle('open',!o);});
+m.addEventListener('click',function(e){if(e.target.closest('a')){b.setAttribute('aria-expanded','false');m.classList.remove('open');}});})();
+</script>

@@ -1,0 +1,102 @@
+# Site configuration. baseURL must be the final public https:// address, ending in a slash.
+baseURL: "https://matthewcnowlin.com/"
+title: "Matthew C. Nowlin"
+languageCode: en-us
+defaultContentLanguage: en
+enableRobotsTXT: true
+disableKinds: [taxonomy, term]
+timeZone: America/Chicago
+
+module:
+  imports:
+    - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-tailwind
+
+outputs:
+  home: [HTML, RSS, JSON]
+  section: [HTML]
+
+params:
+  # Owner identity (used in the header, structured data, and llms.txt)
+  owner:
+    name: "Matthew C. Nowlin"
+    title: "Associate Professor of Political Science"
+    institution: "University of Texas at Arlington"
+    institution_url: "https://www.uta.edu/"
+    department_url: "https://www.uta.edu/academics/schools-colleges/liberal-arts/departments/political-science"
+    email: "matthew.nowlin@uta.edu"
+    photo: "images/matthew-nowlin.jpg"
+    cv: "files/nowlin-cv-short.pdf"
+    profiles:
+      - name: "C.V."
+        url: "files/nowlin-cv-short.pdf"
+      - name: "Google Scholar"
+        url: "https://scholar.google.com/citations?user=xu7Y7_QAAAAJ&hl=en"
+      - name: "ORCID"
+        url: "https://orcid.org/0000-0002-0513-3756"
+      - name: "OSF"
+        url: "https://osf.io/j7nbz/"
+      - name: "GitHub"
+        url: "https://github.com/mnowlin"
+  appearance:
+    mode: light
+    color: stone
+    theme_day: custom
+    theme_night: custom
+    color_mode: light
+    font: native
+    font_size: L
+  header:
+    navbar:
+      enable: true
+      show_search: true
+      logo:
+        text: "Matthew C. Nowlin"
+  features:
+    search:
+      provider: pagefind
+  extensions:
+    css:
+      - css/custom.css
+  mysite:
+    credit: false      # "Footer credit" box was unchecked on the information form
+    discovery: true    # "Invisible marker" box was checked on the information form
+
+taxonomies:
+  tag: tags
+  publication_type: publication_types
+
+permalinks:
+  publication: /publication/:contentbasename/
+  talk: /talk/:contentbasename/
+
+menu:
+  main:
+    - name: Bio & C.V.
+      url: /bio/
+      weight: 10
+    - name: Writings
+      url: /publication/
+      weight: 20
+    - name: Research Areas
+      url: "/#research-areas"
+      weight: 30
+    - name: People
+      url: /authors/
+      weight: 50
+    - name: Teaching
+      url: /teaching/
+      weight: 60
+    - name: Contact
+      url: /contact/
+      weight: 70
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+sitemap:
+  changefreq: monthly
+
+minify:
+  minifyOutput: true

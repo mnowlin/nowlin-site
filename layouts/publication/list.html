@@ -1,0 +1,176 @@
+{{ define "main" }}
+{{- $items := sort (where site.RegularPages "Section" "in" (slice "publication" "talk")) "Date" "desc" -}}
+{{- $tabOrder := slice "book" "articles" "chapters" "proceedings" "reviews" "oer" "presentations" -}}
+{{- $present := slice -}}
+{{- range $items }}{{ $t := partial "functions/tab_of.html" . }}{{ if not (in $present $t) }}{{ $present = $present | append $t }}{{ end }}{{ end -}}
+{{- $years := slice -}}
+{{- range $items }}{{ $y := .Date.Format "2006" }}{{ if not (in $years $y) }}{{ $years = $years | append $y }}{{ end }}{{ end -}}
+{{- $entries := slice -}}
+
+<div class="wrap">
+  {{ partial "breadcrumbs.html" . }}
+  <header class="list-head">
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.subtitle }}<p class="page-subtitle">{{ . }}</p>{{ end }}
+  </header>
+
+  <nav class="pub-tabs" role="tablist" aria-label="Writing type">
+    <button type="button" class="tab-btn active" data-tab="all" role="tab" aria-selected="true">{{ i18n "label_all" }}</button>
+    {{- range $tabOrder }}{{ if in $present . }}
+    <button type="button" class="tab-btn" data-tab="{{ . }}" role="tab" aria-selected="false">{{ i18n (printf "tab_%s" .) }}</button>
+    {{- end }}{{ end }}
+  </nav>
+
+  <div class="pub-layout">
+    <aside class="pub-sidebar" aria-label="Filters">
+      <div class="filter-block">
+        <label for="f-q" class="filter-label">{{ i18n "label_search" }}</label>
+        <input id="f-q" type="search" class="filter-input" placeholder="Title, co-author, journal…" autocomplete="off">
+      </div>
+      <div class="filter-block">
+        <label for="f-area" class="filter-label">{{ i18n "label_research_areas" }}</label>
+        <select id="f-area" class="filter-input">
+          <option value="">All research areas</option>
+          {{- range site.Data.research_areas.areas }}
+          <option value="{{ .id }}">{{ .title }}</option>
+          {{- end }}
+        </select>
+      </div>
+      <fieldset class="filter-block">
+        <legend class="filter-label">Year</legend>
+        <div class="year-list">
+          {{- range $years }}
+          <label class="check-row"><input type="checkbox" class="f-year" value="{{ . }}"> <span>{{ . }}</span></label>
+          {{- end }}
+        </div>
+      </fieldset>
+      <button type="button" id="f-reset" class="btn btn-secondary btn-small">{{ i18n "label_reset" }}</button>
+    </aside>
+
+    <section class="pub-main" aria-label="Writings">
+      <div class="pub-toolbar">
+        <p class="result-count" aria-live="polite">{{ len $items }} {{ i18n "label_results_of" }} {{ len $items }} {{ i18n "label_results" }}</p>
+        <div class="toolbar-right">
+          <label for="f-sort" class="sr-only">Sort</label>
+          <select id="f-sort" class="filter-input filter-input--inline">
+            <option value="new">Newest first</option>
+            <option value="old">Oldest first</option>
+            <option value="az">Title A–Z</option>
+            <option value="za">Title Z–A</option>
+          </select>
+          <button type="button" id="f-bib" class="btn btn-secondary btn-small">{{ i18n "label_download_bibtex" }}</button>
+        </div>
+      </div>
+
+      <ol class="pub-list cite-list">
+        {{- range $i, $p := $items }}
+          {{- $tab := partial "functions/tab_of.html" $p -}}
+          {{- $slug := partial "functions/slug.html" $p -}}
+          {{- $search := lower (printf "%s %s %s %s %s" ($p.Title | plainify) (delimit ($p.Params.authors | default slice) " ") ($p.Params.publication | default "" | plainify) ($p.Params.abstract | default "" | plainify) ($p.Params.event | default "")) -}}
+          <li class="pub-item cite-item" data-tab="{{ $tab }}" data-year="{{ $p.Date.Format "2006" }}" data-date="{{ $p.Date.Format "2006-01-02" }}" data-title="{{ lower ($p.Title | plainify) }}" data-types='{{ $p.Params.publication_types | default slice | jsonify }}' data-areas='{{ $p.Params.tags | default slice | jsonify }}' data-idx="{{ $i }}" data-search="{{ $search }}">
+            {{ partial "citation_line.html" (dict "page" $p) }}
+          </li>
+          {{- $entries = $entries | append (dict "i" $i "slug" $slug "bib" (partial "bibtex.html" $p)) -}}
+        {{- end }}
+      </ol>
+      <p class="pub-empty" hidden>No writings match these filters.</p>
+    </section>
+  </div>
+</div>
+
+<script>
+(function () {
+  var data = {{ $entries | jsonify | safeJS }};
+  var tabs = document.querySelectorAll('.tab-btn');
+  var list = document.querySelector('.pub-list');
+  var items = Array.prototype.slice.call(document.querySelectorAll('.pub-item'));
+  var countEl = document.querySelector('.result-count');
+  var empty = document.querySelector('.pub-empty');
+  var q = document.getElementById('f-q'), area = document.getElementById('f-area'),
+      sortSel = document.getElementById('f-sort'), years = document.querySelectorAll('.f-year');
+  var validTabs = Array.prototype.map.call(tabs, function (b) { return b.dataset.tab; });
+  var state = { tab: 'all', area: '', q: '', years: [], sort: 'new' };
+
+  function parseHash() {
+    var h = decodeURIComponent(location.hash.replace(/^#/, ''));
+    var s = { tab: 'all', area: '', q: '', years: [], sort: state.sort };
+    h.split('&').forEach(function (part) {
+      if (!part) return;
+      var kv = part.split('=');
+      if (kv.length === 1) { if (validTabs.indexOf(kv[0]) >= 0) s.tab = kv[0]; return; }
+      if (kv[0] === 'tab' && validTabs.indexOf(kv[1]) >= 0) s.tab = kv[1];
+      if (kv[0] === 'area') s.area = kv[1];
+      if (kv[0] === 'q') s.q = kv[1];
+      if (kv[0] === 'year') s.years = kv[1].split(',').filter(Boolean);
+    });
+    return s;
+  }
+  function writeHash() {
+    var parts = [state.tab];
+    if (state.area) parts.push('area=' + state.area);
+    if (state.years.length) parts.push('year=' + state.years.join(','));
+    if (state.q) parts.push('q=' + encodeURIComponent(state.q));
+    var h = '#' + parts.join('&');
+    if (location.hash !== h) history.pushState(null, '', h);
+  }
+  function syncControls() {
+    tabs.forEach(function (btn) {
+      var on = btn.dataset.tab === state.tab;
+      btn.classList.toggle('active', on);
+      btn.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    area.value = state.area; q.value = state.q;
+    years.forEach(function (cb) { cb.checked = state.years.indexOf(cb.value) >= 0; });
+  }
+  function apply() {
+    var visible = 0, needle = state.q.toLowerCase().trim();
+    items.forEach(function (item) {
+      var show = (state.tab === 'all') || (item.dataset.tab === state.tab);
+      if (show && state.area) show = JSON.parse(item.dataset.areas || '[]').indexOf(state.area) >= 0;
+      if (show && state.years.length) show = state.years.indexOf(item.dataset.year) >= 0;
+      if (show && needle) show = item.dataset.search.indexOf(needle) >= 0;
+      item.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    countEl.textContent = visible + ' of ' + items.length + ' results';
+    empty.hidden = visible !== 0;
+  }
+  function sortItems() {
+    var by = state.sort;
+    items.sort(function (a, b) {
+      if (by === 'az' || by === 'za') { var c = a.dataset.title.localeCompare(b.dataset.title); return by === 'az' ? c : -c; }
+      var d = a.dataset.date.localeCompare(b.dataset.date); if (d === 0) d = (+b.dataset.idx) - (+a.dataset.idx);
+      return by === 'old' ? d : -d;
+    });
+    items.forEach(function (el) { list.appendChild(el); });
+  }
+  function update(push) { syncControls(); apply(); if (push) writeHash(); }
+
+  tabs.forEach(function (btn) {
+    btn.addEventListener('click', function () { state.tab = btn.dataset.tab; update(true); });
+  });
+  area.addEventListener('change', function () { state.area = area.value; update(true); });
+  var t = null;
+  q.addEventListener('input', function () { clearTimeout(t); t = setTimeout(function () { state.q = q.value; apply(); writeHash(); }, 150); });
+  years.forEach(function (cb) { cb.addEventListener('change', function () {
+    state.years = Array.prototype.filter.call(years, function (x) { return x.checked; }).map(function (x) { return x.value; });
+    update(true); }); });
+  sortSel.addEventListener('change', function () { state.sort = sortSel.value; sortItems(); });
+  document.getElementById('f-reset').addEventListener('click', function () {
+    state = { tab: 'all', area: '', q: '', years: [], sort: state.sort }; update(true);
+  });
+  document.getElementById('f-bib').addEventListener('click', function () {
+    var vis = items.filter(function (el) { return el.style.display !== 'none'; }).map(function (el) { return +el.dataset.idx; });
+    var txt = data.filter(function (d) { return vis.indexOf(d.i) >= 0; }).map(function (d) { return d.bib.trim(); }).join('\n\n') + '\n';
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([txt], { type: 'application/x-bibtex' }));
+    a.download = 'nowlin-writings.bib'; document.body.appendChild(a); a.click(); a.remove();
+  });
+  window.addEventListener('popstate', function () { var s = parseHash(); s.sort = state.sort; state = s; update(false); });
+
+  // On load: read the hash and filter immediately.
+  var init = parseHash(); state.tab = init.tab; state.area = init.area; state.q = init.q; state.years = init.years;
+  update(false);
+})();
+</script>
+{{ end }}

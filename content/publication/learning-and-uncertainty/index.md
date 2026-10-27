@@ -1,0 +1,13 @@
+---
+title: "Learning and Uncertainty: Information Environments and Policy-Oriented Learning"
+date: 2025-01-01
+authors: ["Matthew C. Nowlin"]
+publication_types: ["chapter"]
+publication: "In The Advocacy Coalition Framework, eds. Hank Jenkins-Smith and Christopher Weible. Palgrave Macmillan, 155–182"
+abstract: "Policy-oriented learning is a significant component of the Advocacy Coalition Framework (ACF) and one of the pathways to policy change. In brief, policy-oriented learning involves the development of or changes in policy-relevant beliefs. Additionally, the outcomes of policy-oriented learning include both belief change and belief reinforcement. Recent work noted that beliefs can be understood as probability distributions with a central tendency (the belief) and variance (uncertainly about the belief). Belief reinforcement occurs when variance is reduced, and learning occurs when the central tendency shifts as a result of information processing. However, the nature of the information environment likely impacts information processing and learning, yet this has largely not been examined. Information environments include the type (e.g., science/technical, political) and availability (e.g., held within epistemic communities, widely available) of possibly relevant information for policymaking. In this chapter, I combine a decade’s worth of public opinion data from 2013 to 2023 to examine beliefs among the public regarding the issues of climate change and nuclear energy. Climate change and nuclear energy are complex issues that involve scientific and technical information and both are politically polarized, though nuclear energy is less polarized than climate change. However, the information environments differ as climate change is featured much more than nuclear energy in media coverage, congressional hearings, and political speeches. I found that learning occurred for both issues between 2013 and 2023 as measured by a significant shift in the mean of risk perceptions; however, learning as belief reinforcement did not occur. Indeed, variance increased for both issues, which reflects increased uncertainty. Examining learning across deep core beliefs (cultural worldviews, environmental orientation, and political ideology), I found learning across deep core beliefs and issues, but uncertainty increased regarding nuclear energy, the issue with less available information. These findings point to the need to consider the role of information environments and uncertainty in policy learning."
+doi: "10.1007/978-3-031-85554-2_7"
+links:
+  - name: "Publisher's Version"
+    url: "https://doi.org/10.1007/978-3-031-85554-2_7"
+tags: ["policy-process"]
+---

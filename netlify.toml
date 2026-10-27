@@ -1,3 +1,8 @@
+# Alternative to GitHub Pages: your domain currently points at Netlify. If you keep Netlify,
+# this builds the same site there. Use one host or the other, not both.
 [build]
-  publish = "docs"
-  command = "wget -q https://github.com/quarto-dev/quarto-cli/releases/download/v1.9.37/quarto-1.9.37-linux-amd64.tar.gz && mkdir -p $HOME/quarto && tar -xzf quarto-1.9.37-linux-amd64.tar.gz -C $HOME/quarto --strip-components=1 && export PATH=$HOME/quarto/bin:$PATH && quarto render"
+  publish = "public"
+  command = "npm ci && hugo --gc --minify && npx pagefind --site public"
+[build.environment]
+  HUGO_VERSION = "0.148.2"
+  NODE_VERSION = "22"

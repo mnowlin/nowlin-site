@@ -1,0 +1,25 @@
+{{- $p := . -}}
+<meta name="citation_title" content="{{ $p.Title | plainify }}">
+{{- range $p.Params.authors }}
+<meta name="citation_author" content="{{ . }}">
+{{- end }}
+<meta name="citation_publication_date" content="{{ $p.Date.Format "2006/01/02" }}">
+{{- $doi := $p.Params.doi -}}
+{{- with $doi }}
+<meta name="citation_doi" content="{{ . }}">
+{{- end }}
+{{- with $p.Params.publication }}
+{{- $types := $p.Params.publication_types | default slice }}
+{{- if in $types "journal_article" }}<meta name="citation_journal_title" content="{{ index (split . ",") 0 | plainify }}">{{ end }}
+{{- end }}
+{{- range $p.Params.links }}{{ if hasSuffix (lower .url) ".pdf" }}<meta name="citation_pdf_url" content="{{ if hasPrefix .url "http" }}{{ .url }}{{ else }}{{ .url | absURL }}{{ end }}">{{ break }}{{ end }}{{ end }}
+{{- $types := $p.Params.publication_types | default slice -}}
+{{- $t := "ScholarlyArticle" -}}
+{{- if in $types "book" }}{{ $t = "Book" }}{{ else if eq $p.Section "talk" }}{{ $t = "CreativeWork" }}{{ end -}}
+{{- $authors := slice -}}
+{{- range $p.Params.authors }}{{ $authors = $authors | append (dict "@type" "Person" "name" .) }}{{ end -}}
+{{- $ld := dict "@context" "https://schema.org" "@type" $t "headline" ($p.Title | plainify | htmlUnescape) "name" ($p.Title | plainify | htmlUnescape) "author" $authors "datePublished" ($p.Date.Format "2006-01-02") "url" $p.Permalink -}}
+{{- with $p.Params.abstract }}{{ $ld = merge $ld (dict "abstract" (. | plainify | htmlUnescape)) }}{{ end -}}
+{{- with $p.Params.publication }}{{ $ld = merge $ld (dict "isPartOf" (. | plainify | htmlUnescape)) }}{{ end -}}
+{{- with $doi }}{{ $ld = merge $ld (dict "identifier" (printf "https://doi.org/%s" .) "sameAs" (printf "https://doi.org/%s" .)) }}{{ end }}
+<script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>

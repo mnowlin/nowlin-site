@@ -1,0 +1,8 @@
+{{- with .Params.links -}}
+<span class="link-row">
+  {{- range . -}}
+  {{- $u := .url -}}{{- if not (hasPrefix $u "http") }}{{ $u = $u | relURL }}{{ end -}}
+  <a class="chip" href="{{ $u }}">{{ if eq .name "Publisher's Version" }}{{ i18n "btn_publisher" }}{{ else }}{{ .name }}{{ end }}</a>
+  {{- end -}}
+</span>
+{{- end -}}

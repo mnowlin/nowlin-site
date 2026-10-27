@@ -1,0 +1,30 @@
+{{- $owner := site.Params.owner -}}
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__id">
+      <p class="site-footer__name">{{ $owner.name }}</p>
+      <p>{{ $owner.title }}<br><a href="{{ $owner.institution_url }}">{{ $owner.institution }}</a></p>
+      <p><a href="mailto:{{ $owner.email }}">{{ $owner.email }}</a></p>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+      <ul>
+        <li><a href="{{ site.Home.RelPermalink }}">{{ i18n "label_home" }}</a></li>
+        {{- range site.Menus.main }}
+          {{- $url := cond (hasPrefix .URL "/#") (printf "%s%s" site.Home.RelPermalink (strings.TrimPrefix "/" .URL)) (strings.TrimPrefix "/" .URL | relURL) }}
+          <li><a href="{{ $url }}">{{ .Name }}</a></li>
+        {{- end }}
+      </ul>
+      <ul>
+        {{- range $owner.profiles }}
+          <li><a href="{{ if hasPrefix .url "http" }}{{ .url }}{{ else }}{{ .url | relURL }}{{ end }}">{{ .name }}</a></li>
+        {{- end }}
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap site-footer__base">
+    <span>© {{ now.Year }} {{ $owner.name }}</span>
+    {{- if site.Params.mysite.credit | default true }}
+      <span class="mysite-credit">Created using <a href="https://garyking.org/mysite">GaryKing.org/mysite</a></span>
+    {{- end }}
+  </div>
+</footer>

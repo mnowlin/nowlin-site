@@ -1,0 +1,13 @@
+{{ define "main" }}
+<div class="wrap content-narrow">
+  {{ partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{ with .Params.subtitle }}<p class="page-subtitle">{{ . }}</p>{{ end }}
+  <ol class="cite-list">
+    {{- range .Pages.ByDate.Reverse }}
+    <li class="cite-item"><div class="cite"><span class="cite-year">{{ .Date.Format "Jan 2006" }}</span>. “<a class="cite-title" href="{{ .RelPermalink }}">{{ .Title }}</a>.” <em class="cite-venue">{{ .Params.event }}</em>. {{ .Params.location }}.</div></li>
+    {{- end }}
+  </ol>
+  <p><a class="btn btn-secondary btn-small" href="{{ "publication/" | relURL }}#presentations">All writings and presentations →</a></p>
+</div>
+{{ end }}

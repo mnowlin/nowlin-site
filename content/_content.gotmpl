@@ -1,0 +1,4 @@
+{{- /* Builds one redirect page per entry in data/redirects.yaml. */ -}}
+{{- range site.Data.redirects -}}
+  {{- $.AddPage (dict "path" (strings.Trim .from "/") "title" (printf "Redirect to %s" .to) "kind" "page" "type" "redirect" "params" (dict "redirect_to" .to "sitemap_exclude" true) "build" (dict "list" "never") "sitemap" (dict "disable" true) "content" (dict "value" "")) -}}
+{{- end -}}

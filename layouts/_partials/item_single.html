@@ -1,0 +1,45 @@
+{{- /* Detail page for a publication or talk. Never shows the publication_types label. */ -}}
+{{- $p := . -}}
+<div class="wrap content-narrow">
+  {{ partial "breadcrumbs.html" $p }}
+  <article class="item-page">
+    <header class="item-head">
+      <h1>{{ $p.Title | markdownify }}</h1>
+      <p class="item-authors">{{ partial "author_list.html" (dict "page" $p "link" true) }}</p>
+      <p class="item-meta">
+        {{- if eq $p.Section "talk" -}}
+          {{ $p.Date.Format "January 2006" }}{{ with $p.Params.event }} · {{ . }}{{ end }}{{ with $p.Params.location }} · {{ . }}{{ end }}
+        {{- else -}}
+          <span>{{ $p.Date.Format "2006" }}</span>{{ with $p.Params.publication }} · <em>{{ . | markdownify }}</em>{{ end }}
+        {{- end -}}
+      </p>
+      {{- if or $p.Params.links $p.Params.doi (ne $p.Section "talk") }}
+      <div class="item-actions">
+        {{ partial "page_links_row.html" $p }}
+        {{- if ne $p.Section "talk" }}
+        <details class="cite-toggle"><summary class="chip chip--muted">{{ i18n "btn_cite" }}</summary>
+          <pre class="bibtex" id="bibtex">{{ partial "bibtex.html" $p }}</pre>
+          <button type="button" class="chip" data-copy="#bibtex">Copy BibTeX</button>
+        </details>
+        {{- end }}
+      </div>
+      {{- end }}
+    </header>
+    {{- with partial "functions/get_featured_image.html" $p }}
+      {{- $img := .Fit "480x480 webp" }}
+      <figure class="item-figure"><img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="{{ $p.Title | plainify }}">
+        {{ with $p.Params.image_credit }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>
+    {{- end }}
+    {{- with $p.Params.abstract }}
+    <section id="abstract" class="item-abstract">
+      <h2>{{ i18n "btn_abstract" }}</h2>
+      <div class="prose">{{ . | markdownify }}</div>
+    </section>
+    {{- end }}
+    {{- with $p.Content }}<section class="prose item-body">{{ . }}</section>{{ end }}
+    {{ partial "see_also.html" $p }}
+  </article>
+</div>
+<script>
+document.addEventListener('click',function(e){var b=e.target.closest('[data-copy]');if(!b)return;var t=document.querySelector(b.dataset.copy);if(!t||!navigator.clipboard)return;navigator.clipboard.writeText(t.textContent).then(function(){var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o},1500);});});
+</script>

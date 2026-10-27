@@ -1,0 +1,158 @@
+{
+  "areas": [
+    {
+      "id": "policy-process",
+      "title": "Theories of the Policy Process",
+      "description": "How policy changes and how policy actors learn: the Advocacy Coalition Framework, policy learning as belief updating, information processing, policy feedback, and implementation.",
+      "items": [
+        "environmental-policymaking-in-an-era-of-climate-change",
+        "policy-beliefs-belief-uncertainty-policy-learning",
+        "advocacy-coalitions-and-political-control",
+        "policy-learning-and-information-processing",
+        "modeling-issue-definitions-using-quantitative-text-analysis",
+        "policy-change-policy-feedback-interest-mobilization",
+        "theories-of-the-policy-process",
+        "oklahoma-marriage-initiative-implementation",
+        "policy-learning-as-belief-updating",
+        "learning-and-uncertainty",
+        "environmental-policymaking-process-and-evolution"
+      ],
+      "subcategories": [
+        {
+          "id": "policy-process--theories",
+          "title": "Theories and Frameworks",
+          "items": [
+            "theories-of-the-policy-process"
+          ]
+        },
+        {
+          "id": "policy-process--learning",
+          "title": "Policy Learning and Information Processing",
+          "items": [
+            "policy-beliefs-belief-uncertainty-policy-learning",
+            "policy-learning-and-information-processing",
+            "policy-learning-as-belief-updating",
+            "learning-and-uncertainty"
+          ]
+        },
+        {
+          "id": "policy-process--change",
+          "title": "Coalitions, Policy Change, and Implementation",
+          "items": [
+            "advocacy-coalitions-and-political-control",
+            "modeling-issue-definitions-using-quantitative-text-analysis",
+            "policy-change-policy-feedback-interest-mobilization",
+            "oklahoma-marriage-initiative-implementation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cultural-theory",
+      "title": "Cultural Theory and Political Beliefs",
+      "description": "Belief systems and worldviews — particularly the cultural theory of risk — and how they shape partisanship, policy attitudes, trust, and perceptions of risk.",
+      "items": [
+        "who-should-do-more-about-climate-change",
+        "place-values-and-public-opinion-about-climate-change",
+        "cultural-theory-of-partisanship-and-policy-attitudes",
+        "cultural-theory-and-managerial-values",
+        "cultural-theory-political-ideology-political-knowledge",
+        "weather-climate-and-worldviews",
+        "beliefs-about-climate-change"
+      ],
+      "subcategories": []
+    },
+    {
+      "id": "climate-energy",
+      "title": "Climate Change and Energy Policy",
+      "description": "Public opinion about climate change and energy, support for carbon pricing, and the politics of U.S. climate and energy policy.",
+      "items": [
+        "environmental-policymaking-in-an-era-of-climate-change",
+        "sea-level-rise-adaptation-polycentric-governance",
+        "who-should-do-more-about-climate-change",
+        "climate-science-or-politics",
+        "political-beliefs-technocracy-energy-climate",
+        "place-values-and-public-opinion-about-climate-change",
+        "revenue-use-and-public-support-for-a-carbon-tax",
+        "tracking-the-nuclear-mood",
+        "weather-climate-and-worldviews",
+        "environmental-policymaking-process-and-evolution",
+        "environmental-policy-politics-and-polarization",
+        "institutions-and-actors-in-us-climate-policy",
+        "beliefs-about-climate-change",
+        "public-opinion-about-climate-change-in-south-carolina",
+        "climate-change-science-policy-and-politics",
+        "carbon-tax-and-public-opinion",
+        "the-policy-and-politics-of-climate-change",
+        "understanding-climate-change"
+      ],
+      "subcategories": []
+    },
+    {
+      "id": "nuclear",
+      "title": "Nuclear Energy and Nuclear Waste",
+      "description": "Public acceptance of nuclear energy and nuclear waste facilities, trust in decision-makers, and the politics of nuclear waste management.",
+      "items": [
+        "deciding-who-decides",
+        "technical-issues-and-engagement-processes",
+        "tracking-the-nuclear-mood",
+        "hot-rocks-that-shoot-ghost-bullets",
+        "policy-change-policy-feedback-interest-mobilization",
+        "reversing-nuclear-opposition",
+        "partisanship-information-and-public-opinion-about-yucca-mountain"
+      ],
+      "subcategories": []
+    },
+    {
+      "id": "hazards",
+      "title": "Natural Hazards and Weather",
+      "description": "How people use weather information and respond to hurricane warnings, and who the public holds responsible for disaster preparedness.",
+      "items": [
+        "routine-weather-information-usage",
+        "social-capital-and-hurricane-warning-response",
+        "public-attribution-of-responsibility-disaster-preparedness",
+        "weather-climate-and-worldviews"
+      ],
+      "subcategories": []
+    },
+    {
+      "id": "deliberation",
+      "title": "Deliberation, Trust, and Expertise",
+      "description": "Citizen deliberation and mini-publics, technocracy, and public support for citizen, expert, and elected-official decision-making.",
+      "items": [
+        "deciding-who-decides",
+        "technical-issues-and-engagement-processes",
+        "scaling-up-deliberative-mini-publics",
+        "political-beliefs-technocracy-energy-climate",
+        "deliberative-processes-stakeholder-engagement"
+      ],
+      "subcategories": []
+    },
+    {
+      "id": "governance",
+      "title": "Environmental Governance and Collaboration",
+      "description": "Polycentric governance, collaboration among public managers and stakeholders, and coastal adaptation to sea-level rise.",
+      "items": [
+        "sea-level-rise-adaptation-polycentric-governance",
+        "stormwater-pond-buffer-implementation",
+        "who-should-do-more-about-climate-change",
+        "public-attribution-of-responsibility-disaster-preparedness",
+        "cultural-theory-and-managerial-values",
+        "improving-governance-of-risk-and-uncertainty",
+        "institutions-and-actors-in-us-climate-policy"
+      ],
+      "subcategories": []
+    },
+    {
+      "id": "methods",
+      "title": "Research Methods and Teaching",
+      "description": "Quantitative text analysis, open educational resources for quantitative methods, and teaching methods to students of public policy.",
+      "items": [
+        "modeling-issue-definitions-using-quantitative-text-analysis",
+        "teaching-quantitative-methods-to-students-of-public-policy",
+        "quantitative-research-methods-for-political-science"
+      ],
+      "subcategories": []
+    }
+  ]
+}

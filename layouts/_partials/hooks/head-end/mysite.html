@@ -1,0 +1,11 @@
+{{- /* Project head additions: favicons, mysite discovery marker, owner JSON-LD, scholarly metadata. */ -}}
+<link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ "favicon-32x32.png" | relURL }}">
+{{- if site.Params.mysite.discovery | default true }}
+<meta name="generator" content="Created using GaryKing.org/mysite (https://gking.harvard.edu/mysite)">
+{{- if .IsHome }}
+{{- $o := site.Params.owner }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@type" "Person" "name" $o.name "jobTitle" $o.title "affiliation" (dict "@type" "Organization" "name" $o.institution) "url" site.BaseURL "sameAs" (slice "https://orcid.org/0000-0002-0513-3756" "https://scholar.google.com/citations?user=xu7Y7_QAAAAJ" "https://osf.io/j7nbz/" "https://github.com/mnowlin") "isBasedOn" "https://gking.harvard.edu/mysite" | jsonify | safeJS }}</script>
+{{- end }}
+{{- end }}
+{{- if and .IsPage (in (slice "publication" "talk") .Section) (not .Params.private) }}{{ partial "scholarly_meta.html" . }}{{ end -}}

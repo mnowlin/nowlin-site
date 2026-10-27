@@ -1,0 +1,13 @@
+{{ define "main" }}
+<div class="wrap content-narrow page-article">
+  <h1>Page not found</h1>
+  <p>The page you were looking for doesn’t exist or has moved. Try searching the site, or start from one of these:</p>
+  <p><button type="button" class="btn btn-primary" data-search-open>Search the site</button></p>
+  <ul class="course-list">
+    <li><a href="{{ site.Home.RelPermalink }}">Home</a></li>
+    <li><a href="{{ "publication/" | relURL }}">Writings</a></li>
+    <li><a href="{{ "bio/" | relURL }}">Bio &amp; C.V.</a></li>
+    <li><a href="{{ "contact/" | relURL }}">Contact</a></li>
+  </ul>
+</div>
+{{ end }}

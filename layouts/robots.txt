@@ -1,0 +1,6 @@
+# Crawlers (including AI assistants) are welcome.
+# A short machine-readable summary of this site is at {{ "llms.txt" | absURL }}
+User-agent: *
+Disallow:
+
+Sitemap: {{ "sitemap.xml" | absURL }}

@@ -1,0 +1,6 @@
+# Short URLs -> destination. Edit freely; each entry becomes a redirect page at build time.
+# Example:
+#   - from: /cv
+#     to: /bio/
+- from: /vita
+  to: /bio/
