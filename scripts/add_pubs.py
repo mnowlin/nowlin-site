@@ -26,7 +26,7 @@ EXPORT_URL = "http://127.0.0.1:23119/better-bibtex/export/collection?/1/{}.json"
 
 TYPES = {"article-journal": "journal_article", "article": "journal_article", "chapter": "chapter",
          "book": "book", "paper-conference": "conference_paper", "review": "book_review",
-         "review-book": "book_review"}
+         "review-book": "book_review", "manuscript": "working_paper"}
 
 # Research-area guesses: a keyword in the title counts on its own; in the abstract it takes two hits.
 AREA_KEYWORDS = {
@@ -171,6 +171,8 @@ def fields(it, by_family):
             pub += (", eds. " if len(eds) > 1 else ", ed. ") + join_names(eds)
         pub += ". " + clean(it.get("publisher", ""))
         pub += ", Forthcoming" if forthcoming else (f", {pages}" if pages else "")
+    elif ptype == "working_paper":
+        pub = container or "Working paper"
     elif ptype == "book":
         pub = ": ".join(x for x in (clean(it.get("publisher-place", "")), clean(it.get("publisher", ""))) if x)
     else:  # conference_paper

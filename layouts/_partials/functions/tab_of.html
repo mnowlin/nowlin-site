@@ -9,6 +9,7 @@
   {{- else if or (in $t "chapter") (in $t "book_chapter") }}{{ $tab = "chapters" }}
   {{- else if in $t "conference_paper" }}{{ $tab = "proceedings" }}
   {{- else if in $t "book_review" }}{{ $tab = "reviews" }}
+  {{- else if in $t "working_paper" }}{{ $tab = "working" }}
   {{- else }}{{ $tab = "articles" }}{{ end -}}
 {{- end -}}
 {{- return $tab -}}

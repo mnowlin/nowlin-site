@@ -44,6 +44,8 @@
   translation: "Book Reviews"
 - id: tab_oer
   translation: "Educational Resources"
+- id: tab_working
+  translation: "Working Papers"
 - id: tab_presentations
   translation: "Presentations"
 - id: kind_paper

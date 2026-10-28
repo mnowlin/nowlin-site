@@ -29,7 +29,7 @@ The script adds a page for every item in the collection that isn't on the site y
 title: "Full Title of the Paper"
 date: 2026-03-01
 authors: ["Matthew C. Nowlin", "Co-Author Name"]
-publication_types: ["journal_article"]   # or book, chapter, conference_paper, book_review
+publication_types: ["journal_article"]   # or book, chapter, conference_paper, book_review, working_paper
 publication: "Journal Name, 12(3): 45–67"
 abstract: "Paste the abstract here."
 doi: "10.1234/abcd"
@@ -40,6 +40,8 @@ tags: ["climate-energy"]   # research-area ids, see below
 featured: false            # true = shown first on the homepage under its research areas
 ---
 ```
+
+For a working paper use `publication_types: ["working_paper"]` and put its status in `publication:` (e.g. “Working paper” or “Under review”); it appears under the **Working Papers** tab. A `doi:` is optional.
 
 For a forthcoming paper add `status: forthcoming` and put “Forthcoming” at the end of `publication:`.
 

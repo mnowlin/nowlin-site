@@ -1,7 +1,7 @@
 {{- $p := . -}}
 {{- $types := $p.Params.publication_types | default slice -}}
 {{- $et := "article" -}}
-{{- if in $types "book" }}{{ $et = "book" }}{{ else if in $types "chapter" }}{{ $et = "incollection" }}{{ else if in $types "conference_paper" }}{{ $et = "inproceedings" }}{{ else if eq $p.Section "talk" }}{{ $et = "misc" }}{{ end -}}
+{{- if in $types "book" }}{{ $et = "book" }}{{ else if in $types "chapter" }}{{ $et = "incollection" }}{{ else if in $types "conference_paper" }}{{ $et = "inproceedings" }}{{ else if in $types "working_paper" }}{{ $et = "unpublished" }}{{ else if eq $p.Section "talk" }}{{ $et = "misc" }}{{ end -}}
 {{- $first := index ($p.Params.authors | default (slice "anon")) 0 -}}
 {{- $fp := split $first " " -}}
 {{- $key := printf "%s%s%s" (lower (index $fp (sub (len $fp) 1)) | replaceRE `[^a-z]` "") ($p.Date.Format "2006") (index (split (partial "functions/slug.html" $p) "-") 0) -}}
@@ -10,7 +10,7 @@
   author = { {{- delimit ($p.Params.authors | default slice) " and " -}} },
   year = { {{- $p.Date.Format "2006" -}} },
 {{- with $p.Params.publication }}
-  {{ if eq $et "article" }}journal{{ else if eq $et "book" }}publisher{{ else }}booktitle{{ end }} = { {{- . | plainify | htmlUnescape -}} },
+  {{ if eq $et "article" }}journal{{ else if eq $et "book" }}publisher{{ else if eq $et "unpublished" }}note{{ else }}booktitle{{ end }} = { {{- . | plainify | htmlUnescape -}} },
 {{- end }}
 {{- with $p.Params.doi }}
   doi = { {{- . -}} },

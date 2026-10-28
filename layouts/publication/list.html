@@ -1,6 +1,6 @@
 {{ define "main" }}
 {{- $items := sort (where site.RegularPages "Section" "in" (slice "publication" "talk")) "Date" "desc" -}}
-{{- $tabOrder := slice "book" "articles" "chapters" "proceedings" "reviews" "oer" "presentations" -}}
+{{- $tabOrder := slice "book" "articles" "chapters" "proceedings" "reviews" "oer" "working" "presentations" -}}
 {{- $present := slice -}}
 {{- range $items }}{{ $t := partial "functions/tab_of.html" . }}{{ if not (in $present $t) }}{{ $present = $present | append $t }}{{ end }}{{ end -}}
 {{- $years := slice -}}
