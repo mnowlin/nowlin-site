@@ -7,7 +7,7 @@ title: "Teaching"
 ### Undergraduate
 
 <ul class="course-list">
-<li><strong><a href="https://mnowlin.github.io/american-government/">Government of the United States</a></strong> — <a href="{{< staticrel "files/POLS2311syllabus.pdf" >}}">Syllabus (PDF)</a></li>
+<li><strong><a href="https://mnowlin.github.io/american-government/">Government of the United States</a></strong></li>
 <li><strong>Energy and Environmental Policy</strong> — <a href="{{< staticrel "files/POLS4392Syllabus.pdf" >}}">Syllabus (PDF)</a></li>
 </ul>
 
