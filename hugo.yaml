@@ -80,9 +80,10 @@ menu:
     - name: Research Areas
       url: "/#research-areas"
       weight: 30
-    - name: People
-      url: /authors/
-      weight: 50
+    # People page hidden; to restore, uncomment these lines and remove `build:` from content/authors/_index.md
+    # - name: People
+    #   url: /authors/
+    #   weight: 50
     - name: Teaching
       url: /teaching/
       weight: 60
