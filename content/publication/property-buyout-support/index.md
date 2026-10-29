@@ -1,5 +1,5 @@
 ---
-title: "Flood Perceptions, Social Capital, and Public Support for Property Buyout Programs"
+title: "Who Supports Managed Retreat? Flood Experience, Local Government Performance, and Public Opinion on Property Buyouts"
 date: 2026-04-17
 authors: ["Matthew C. Nowlin", "Lauren Greenwood"]
 publication_types: ["working_paper"]

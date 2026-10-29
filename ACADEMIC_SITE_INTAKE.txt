@@ -1,0 +1,151 @@
+============================================================
+  BUILD MY ACADEMIC WEBSITE — INFORMATION FORM
+============================================================
+
+HOW TO FILL THIS OUT
+  - Type your answer on the line after each question (after the ">").
+  - Leave anything you don't have, or don't want, blank. That's fine.
+  - You don't need to delete or reword anything. Just fill in what you can.
+  - When you're done, save the file and hand it to your AI assistant
+    (the last few lines tell it what to do).
+
+There are two ways to fill this out — pick whichever is less work:
+  - STARTING FROM SCRATCH: answer the questions in Part 1.
+  - YOU ALREADY HAVE A WEBSITE: skip most of Part 1 — just put your
+    current website's address in Part 2, and your assistant will pull
+    your content from it. Use Part 1 only to add or correct things.
+
+
+------------------------------------------------------------
+  PART 1 — ABOUT YOU
+------------------------------------------------------------
+
+Name:
+>
+
+Title / position (e.g., "Assistant Professor of Political Science"):
+>
+
+Institution:
+>
+
+Short homepage intro — 2 to 4 sentences, written about you in the third
+person. This is the brief welcome at the very top of your homepage:
+>
+
+Full bio — a longer narrative for your Bio / C.V. page (career, research
+interests, main contributions). Can be several paragraphs:
+>
+
+Email / contact info:
+>
+
+Photo — attach the image file when you talk to your assistant, or paste
+a link to your institutional headshot:
+>
+
+Publications — attach a BibTeX file or your C.V. (PDF), or paste a list:
+> /Users/matthewnowlin/Library/CloudStorage/OneDrive-UTArlington/04-RESOURCES/nowlin-cv/nowlin-cv-short.pdf
+
+Presentations / talks — attach or paste:
+>
+
+Software projects (if any):
+>
+
+Datasets (if any):
+>
+
+Teaching — courses you've taught (if any):
+>
+
+Research group / lab members — names and roles, if you have a group:
+>
+
+Research areas / topics — list 3 to 8:
+>
+
+Anything else you'd like on the site (media, consulting, startups, etc.):
+>
+
+
+------------------------------------------------------------
+  PART 2 — IF YOU ALREADY HAVE A WEBSITE (optional)
+------------------------------------------------------------
+
+Address of my current website:
+> https://matthewcnowlin.com
+
+Anything on the old site to change, drop, or reorganize:
+>
+
+
+------------------------------------------------------------
+  A DESIGN YOU LIKE (optional)
+------------------------------------------------------------
+
+Paste a link to any website whose design you like — your assistant will
+use it as the visual model for your site:
+> https://gking.harvard.edu 
+
+
+------------------------------------------------------------
+  VISIBILITY, CREDIT & STAYING IN TOUCH (optional)
+------------------------------------------------------------
+
+Everything here is optional. The [x]/[ ] marks show the defaults — change any
+[x] to [ ] (or a [ ] to [x]) to opt in or out. You can also change any of
+these later just by asking your assistant.
+
+ON YOUR SITE
+  [ ] Footer credit — a small, tasteful "Created using GaryKing.org/mysite"
+      line in the bottom-right corner of every page.
+
+  [x] Invisible marker — a hidden line in your page's source code. Visitors
+      never see it and it collects nothing about you; it simply lets us find
+      sites built with this tool so we can support them, and adds standard
+      structured data that helps search engines understand your page.
+
+WITH THE GaryKing.org/mysite TEAM
+  If you share your name and institution, we can reach out when we improve the
+  tool and let you know when something changes that could affect your live
+  site — like new hosting limits or dependency updates — so you never lose the
+  ability to make edits. We'll never sell your details or post your email
+  publicly, and you can ask us to remove your information at any time.
+
+  [ ] Share my details with the GaryKing.org/mysite team so they can contact
+      me about updates and changes that affect my site.
+
+  [ ] List my site in the public GaryKing.org/mysite directory — it links to
+      your site, which can help it rank higher in search results.
+
+  (Fill in the lines below only if you checked one or both boxes just above.)
+
+      Name:
+      >
+
+      Institution:
+      >
+
+      Email (where we should reach you):
+      >
+
+
+============================================================
+  FOR YOUR AI ASSISTANT — you don't need to read this part
+============================================================
+
+Build instructions are here:
+https://gking.harvard.edu/mysite/files/ACADEMIC_SITE_PROMPT.md
+
+Fetch that page and follow it exactly, using my answers above as the
+content. Honor my choices above: set params.mysite.credit to true if "Footer
+credit" is checked or false if unchecked, and set params.mysite.discovery to
+true if "Invisible marker" is checked or false if unchecked. Build a local
+preview and show it to me before anything goes public.
+
+If I checked "Share my details" and/or "List my site in the public directory,"
+follow the prompt's "Sharing the Owner's Details" step to send my name,
+institution, email, and site URL to the mysite team once the site is published
+— setting the directory field to Yes only if I checked the directory box. If
+neither box is checked, skip that step entirely and send nothing.
